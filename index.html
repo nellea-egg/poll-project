@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Your Bet on His Next Move!</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Kalam:wght@300;400;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.1/p5.js"></script>
+    <style>
+        body { 
+            /* Simple centering for the canvas */
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f7f7f7; /* Light background for the doodle style */
+        }
+        /* Hidden input/button elements since p5 draws them */
+        #poll-container {
+            border: 2px dashed #ccc; /* Add a dashed border for a notebook look */
+            padding: 20px;
+        }
+        h1 {
+            font-family: 'Permanent Marker', cursive; /* Use marker font for the title */
+            font-size: 3em;
+            color: #d90429; /* Sarcastic red color */
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Take Your Bet on His Next Move!</h1>
+    
+    <div id="poll-container"></div> 
+    
+    <script src="script.js"></script> 
+    
+    <script src="sketch.js"></script> 
+</body>
+</html>
