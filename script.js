@@ -10,7 +10,7 @@ const GOOGLE_FORM_FIELD_ID = 'entry.898720741';
 
 // 3. IMPORTANT: Update this value on the 1st of every month! 
 // We use 'window.' to guarantee this variable is accessible in sketch.js
-window.CURRENT_MONTH_ID = '2025-07'; 
+window.CURRENT_MONTH_ID = '2025-11'; 
 
 // ====================================================================================
 // --- CORE LOGIC ---
