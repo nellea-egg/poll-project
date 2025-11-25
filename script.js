@@ -12,6 +12,9 @@ const GOOGLE_FORM_FIELD_ID = 'entry.898720741';
 // We use 'window.' to guarantee this variable is accessible in sketch.js
 window.CURRENT_MONTH_ID = '2025-11'; 
 
+// 4. The URL for your Google Apps Script Web App (API for results)
+const RESULTS_API_URL = 'https://script.google.com/macros/s/AKfycbwV9SUf7Je1zsmc7kx9t59BUCafes_WTh_QFObktz7qlw8vWNdNBp0nzPjkwZxm50Dq0A/exec';
+
 // ====================================================================================
 // --- CORE LOGIC ---
 // ====================================================================================
