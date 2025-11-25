@@ -36,12 +36,11 @@ function setup() {
     let canvas = createCanvas(canvasWidth, canvasHeight); 
     canvas.parent('poll-container');
 
-    // ** FIX 1 APPLIED HERE **
     // Check voting status from local storage 
     if (window.localStorage.getItem(`voted_for_${window.CURRENT_MONTH_ID}`) === 'true') { 
           hasVoted = true;
-          // Pre-fetch the truth status if user has already voted
-          fetchTruthStatus();
+          // *** ADDED: Fetch the final answer immediately on page load if user already voted ***
+          fetchTruthStatus(); 
     }
 
     // Initialize buttons positions
@@ -234,11 +233,14 @@ function fetchTruthStatus() {
     fetch(RESULTS_API_URL)
         .then(response => response.json())
         .then(data => {
-            // Check if the 'trueAnswer' object exists in the data
-            if (data.trueAnswer) {
+            // CRITICAL CHECK HERE: data.trueAnswer is the object.
+            // We need to access the "displayAnswer" key inside it.
+            if (data.trueAnswer && data.trueAnswer.displayAnswer) { 
+                // If the key is found, set the global variable to the message string
                 trueAnswerData = data.trueAnswer.displayAnswer;
             } else {
-                trueAnswerData = false; // No official result yet
+                // Otherwise, keep it false (or null)
+                trueAnswerData = false; 
             }
         })
         .catch(error => {
