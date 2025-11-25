@@ -13,7 +13,8 @@ const options = [
 
 // Global drawing variables
 let buttons = [];
-let hasVoted = false; 
+let hasVoted = false;
+let trueAnswerData = null; // Will store the final result if fetched 
 
 // Variables for Doodle tracking 
 let userDoodleX = 0; 
@@ -35,9 +36,12 @@ function setup() {
     let canvas = createCanvas(canvasWidth, canvasHeight); 
     canvas.parent('poll-container');
 
+    // ** FIX 1 APPLIED HERE **
     // Check voting status from local storage 
-    if (window.localStorage.getItem(`voted_for_${CURRENT_MONTH_ID}`) === 'true') { 
+    if (window.localStorage.getItem(`voted_for_${window.CURRENT_MONTH_ID}`) === 'true') { 
           hasVoted = true;
+          // Pre-fetch the truth status if user has already voted
+          fetchTruthStatus();
     }
 
     // Initialize buttons positions
@@ -143,7 +147,7 @@ function draw() {
     }
 }
 
-// --- HELPER FUNCTIONS ---
+// --- NEW/UPDATED HELPER FUNCTIONS ---
 
 function drawWobblyRect(x, y, w, h) {
     let wobble = 0.5; 
@@ -190,22 +194,77 @@ function drawUserDoodle() {
     pop(); 
 }
 
-// --- HANDLE CLICK EVENT ---
+// --- HANDLE CLICK EVENT (REPLACED) ---
 
 function mousePressed() {
-    if (hasVoted) return;
+    // 1. Check if the poll is already done (hasVoted is true)
+    if (hasVoted) {
+        // 2. If voted AND we have the final truth, check for button click
+        if (trueAnswerData) {
+            let btnX = width / 2 - 80;
+            let btnY = height / 2 + 100;
+            let btnW = 160;
+            let btnH = 40;
+            
+            if (mouseX > btnX && mouseX < btnX + btnW && mouseY > btnY && mouseY < btnY + btnH) {
+                // Call the chart display function defined in results.js
+                window.displayResultsChart(trueAnswerData); 
+            }
+        }
+        return; // Exit function if voted
+    }
 
+    // 3. Check for vote buttons click (only runs if hasVoted is false)
     buttons.forEach(button => {
         if (button.hover) {
             window.submitVote(button.value); 
             hasVoted = true;
+            // Now, immediately fetch the results/truth status in the background
+            fetchTruthStatus(); 
             background(240, 240, 255); 
             return; 
         }
     });
 }
 
-// --- VOTING MESSAGE DISPLAY ---
+
+// --- NEW FUNCTION: Fetches the True Answer status asynchronously ---
+function fetchTruthStatus() {
+    // RESULTS_API_URL is available globally from script.js
+    fetch(RESULTS_API_URL)
+        .then(response => response.json())
+        .then(data => {
+            // Check if the 'trueAnswer' object exists in the data
+            if (data.trueAnswer) {
+                trueAnswerData = data.trueAnswer.displayAnswer;
+            } else {
+                trueAnswerData = false; // No official result yet
+            }
+        })
+        .catch(error => {
+            console.error('Could not fetch truth status:', error);
+            trueAnswerData = false;
+        });
+}
+
+// --- NEW FUNCTION: Draws the SEE RESULTS button ---
+function drawResultsButton(x, y, w, h, text, hover) {
+    if (hover) {
+        fill(255, 100, 100); // Light red when hovered
+    } else {
+        fill(255, 150, 150); // Pink/Red background
+    }
+    noStroke();
+    rect(x, y, w, h, 10); // Rounded rectangle
+
+    fill(30); 
+    textSize(18); 
+    textAlign(CENTER, CENTER);
+    textFont('Permanent Marker');
+    text(text, x + w / 2, y + h / 2);
+}
+
+// --- VOTING MESSAGE DISPLAY (UPDATED) ---
 
 function displayVotedMessage() {
     textFont('Caveat'); 
@@ -219,5 +278,26 @@ function displayVotedMessage() {
     fill(30); 
     text("We've archived your guess.", width / 2, height / 2 + 15);
     text("Check back next month for the sad truth.", width / 2, height / 2 + 50);
-    cursor(ARROW);
+
+    // If the final answer is available, draw the button
+    if (trueAnswerData) { // Check if trueAnswerData holds the message string (it's not false/null)
+        let btnX = width / 2 - 80;
+        let btnY = height / 2 + 100;
+        let btnW = 160;
+        let btnH = 40;
+        let btnHover = mouseX > btnX && mouseX < btnX + btnW && mouseY > btnY && mouseY < btnY + btnH;
+        
+        // Draw the button
+        drawResultsButton(btnX, btnY, btnW, btnH, "SEE FINAL RESULT", btnHover);
+
+        // Update cursor
+        if (btnHover) {
+            cursor(HAND);
+            window.buttonHovered = true;
+        } else if (!window.buttonHovered) {
+             cursor(ARROW);
+        }
+    } else {
+        cursor(ARROW);
+    }
 }
