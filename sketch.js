@@ -204,10 +204,15 @@ function mousePressed() {
             let btnY = height / 2 + 100;
             let btnW = 160;
             let btnH = 40;
+
+            let margin = 5;
             
-            if (mouseX > btnX && mouseX < btnX + btnW && mouseY > btnY && mouseY < btnY + btnH) {
-                // Call the chart display function defined in results.js
-                window.displayResultsChart(trueAnswerData); 
+            if (mouseX > btnX - margin && 
+                mouseX < btnX + btnW + margin && 
+                mouseY > btnY - margin && 
+                mouseY < btnY + btnH + margin) {
+                    // Call the chart display function defined in results.js
+                    window.displayResultsChart(trueAnswerData); 
             }
         }
         return; // Exit function if voted
