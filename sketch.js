@@ -294,12 +294,10 @@ function displayVotedMessage() {
 
         // Update cursor
         if (btnHover) {
-            cursor(HAND);
-            window.buttonHovered = true;
-        } else if (!window.buttonHovered) {
-             cursor(ARROW);
-        }
-    } else {
-        cursor(ARROW);
-    }
+            cursor(HAND); // Show the pointer finger when hovering
+        } else {
+            // Reverts to the default (doodle person) cursor
+            cursor(); 
+        } 
+    } 
 }
