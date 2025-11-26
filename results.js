@@ -54,8 +54,19 @@ fetch(RESULTS_API_URL)
                 resultsContainer.insertBefore(truthElement, canvas);
             }
             
-            // --- FIX: ROBUST DATA MAPPING ---
-            // 1. Combine all options (from API list) and all keys (from vote counts)
+            // --- FIX: ROBUST DATA MAPPING and NUMBER GUARANTEE ---
+
+            // 1. Get the list of voted keys from the API
+            let voteKeys = Object.keys(counts);
+            
+            // 2. DEFENSIVE FIX: Check for and replace the known typo in the voted keys
+            voteKeys = voteKeys.map(key => 
+                key.includes("He will will pay most of it (75% or more)") 
+                ? "He will pay most of it (75% or more)" 
+                : key
+            );
+
+            // 3. Combine the clean options from sketch.js with the clean voted keys
             const allLabelsSet = new Set([...options, ...Object.keys(counts)]);
             const allLabels = Array.from(allLabelsSet);
             
