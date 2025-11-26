@@ -265,9 +265,9 @@ function drawResultsButton(x, y, w, h, buttonText, hover) {
     rect(x, y, w, h, 10); // Rounded rectangle
 
     fill(30); 
-    textSize(18); 
+    textSize(14); 
     textAlign(CENTER, CENTER);
-    textFont('Permanent Marker');
+    textFont('Caveat');
     text(buttonText, x + w / 2, y + h / 2); 
 }
 
