@@ -97,8 +97,30 @@ function displayResultsChart(finalTruthMessage = false) {
                     
                     plugins: {
                         legend: {
-                            display: true
+                            display: true,
+                            labels: {
+                                // Forcing separation by increasing the box size and padding
+                                boxWidth: 30, 
+                                padding: 20, 
+                                // 3. Legend Text Size Increase
+                                font: {
+                                    size: 14 // Increased size
+                                }
                         },
+                            datalabels:{
+                                formatter: (value, context) => {
+                                // Display the raw count (the 'value' is the vote count)
+                                return value; 
+                            },
+                            color: '#fff', // White text
+                            textShadowBlur: 4,
+                            textShadowColor: 'black', // Black shadow for contrast on light colors
+                            font: {
+                                weight: 'bold',
+                                size: 16 // Make the numbers stand out
+                            }
+                        },
+                                
                         title: {
                             display: true,
                             text: 'Community Poll Results'
