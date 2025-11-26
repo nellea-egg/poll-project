@@ -32,7 +32,7 @@ function displayResultsChart(finalTruthMessage = false) {
     // NOTE: The missing brace from the previous step is now corrected,
     // and the function continues from here.
 
-    fetch(RESULTS_API_URL)
+fetch(RESULTS_API_URL)
         .then(response => response.json())
         .then(data => {
             const counts = data.currentMonth.counts;
@@ -54,8 +54,17 @@ function displayResultsChart(finalTruthMessage = false) {
                 resultsContainer.insertBefore(truthElement, canvas);
             }
             
-            const labels = options.map(option => option);
-            const dataValues = options.map(option => counts[option]);
+            // --- FIX: ROBUST DATA MAPPING ---
+            // 1. Combine all options (from API list) and all keys (from vote counts)
+            const allLabelsSet = new Set([...options, ...Object.keys(counts)]);
+            const allLabels = Array.from(allLabelsSet);
+            
+            const labels = allLabels;
+            
+            // 2. Map the combined labels to their count, defaulting to 0 if the count is missing
+            const dataValues = allLabels.map(label => counts[label] || 0);
+            // --- END FIX ---
+
 
             // 2. Destroy old chart instance if it exists
             if (chartInstance) {
@@ -92,32 +101,28 @@ function displayResultsChart(finalTruthMessage = false) {
                     responsive: true,
                     maintainAspectRatio: true, // <-- FIX: Changed to true to prevent expansion
                     
-                    // The 'scales' block must be deleted for pie charts! 
-                    // It causes errors and is unnecessary.
-                    
                     plugins: {
                         legend: {
                             display: true,
+                            position: 'bottom',
                             labels: {
-                                // Forcing separation by increasing the box size and padding
-                                boxWidth: 30, 
+                                boxWidth: 30,  // Forces separation
                                 padding: 20, 
-                                // 3. Legend Text Size Increase
                                 font: {
                                     size: 14 // Increased size
                                 }
+                            }
                         },
-                            datalabels:{
-                                formatter: (value, context) => {
-                                // Display the raw count (the 'value' is the vote count)
+                        datalabels:{
+                            formatter: (value, context) => {
                                 return value; 
                             },
-                            color: '#fff', // White text
+                            color: '#fff', 
                             textShadowBlur: 4,
-                            textShadowColor: 'black', // Black shadow for contrast on light colors
+                            textShadowColor: 'black', 
                             font: {
                                 weight: 'bold',
-                                size: 16 // Make the numbers stand out
+                                size: 16 
                             }
                         },
                                 
@@ -135,4 +140,4 @@ function displayResultsChart(finalTruthMessage = false) {
             // Display a user-friendly error message
             resultsContainer.innerHTML = `<h2 style="font-family: 'Permanent Marker'; color: red; text-align: center;">Sorry, could not load live results. Will work on it!.</h2>`;
         });
-} // <-- This is the only final brace closing the function.
+}// <-- This is the only final brace closing the function.
