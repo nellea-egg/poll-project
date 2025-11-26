@@ -9,15 +9,22 @@ let chartInstance = null; // To hold the Chart.js instance
  * @param {string} finalTruthMessage - The message to display if the poll is closed.
  */
 function displayResultsChart(finalTruthMessage = false) {
+    console.log("--- RESULTS CHART FUNCTION STARTED ---"); // CHECKPOINT 1
     // Hide the doodle poll container
     if (pollContainer) {
+        console.log("POLL CONTAINER FOUND. HIDING."); // CHECKPOINT 2
         pollContainer.style.display = 'none';
+    } else {
+        console.log("ERROR: pollContainer IS NULL."); // If this appears, the element wasn't found
     }
     // Show the chart container
     if (resultsContainer) {
+        console.log("RESULTS CONTAINER FOUND. SHOWING."); // CHECKPOINT 3
         resultsContainer.style.display = 'block';
-        resultsContainer.innerHTML = ''; // Clear previous content
-
+        resultsContainer.innerHTML = ''; 
+    } else {
+        console.log("ERROR: resultsContainer IS NULL.");
+    }
         // CRITICAL FIX: Re-create the canvas element here
         const canvas = document.createElement('canvas');
         canvas.id = 'voteChart';
