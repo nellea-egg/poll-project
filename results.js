@@ -17,12 +17,12 @@ function displayResultsChart(finalTruthMessage = false) {
     if (resultsContainer) {
         resultsContainer.style.display = 'block';
         resultsContainer.innerHTML = ''; // Clear previous content
-    }
 
-    // CRITICAL FIX: Re-create the canvas element here
-    const canvas = document.createElement('canvas');
-    canvas.id = 'voteChart';
-    resultsContainer.appendChild(canvas);
+        // CRITICAL FIX: Re-create the canvas element here
+        const canvas = document.createElement('canvas');
+        canvas.id = 'voteChart';
+        resultsContainer.appendChild(canvas);
+    }
 
     fetch(RESULTS_API_URL)
         .then(response => response.json())
