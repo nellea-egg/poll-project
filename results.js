@@ -29,7 +29,6 @@ function displayResultsChart(finalTruthMessage = false) {
         const canvas = document.createElement('canvas');
         canvas.id = 'voteChart';
         resultsContainer.appendChild(canvas);
-    }
 
     fetch(RESULTS_API_URL)
         .then(response => response.json())
