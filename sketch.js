@@ -200,7 +200,7 @@ function mousePressed() {
     if (hasVoted) {
         // 2. If voted AND we have the final truth, check for button click
         if (trueAnswerData) {
-            let btnX = width / 2 - 80;
+            let btnX = width / 2 + 100;
             let btnY = height / 2 + 100;
             let btnW = 160;
             let btnH = 40;
