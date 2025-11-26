@@ -65,6 +65,8 @@ fetch(RESULTS_API_URL)
             const dataValues = allLabels.map(label => counts[label] || 0);
             // --- END FIX ---
 
+            console.log("Final Labels for Chart:", labels);
+            console.log("Final Data Values for Chart:", dataValues);
 
             // 2. Destroy old chart instance if it exists
             if (chartInstance) {
