@@ -110,4 +110,3 @@ function displayResultsChart(finalTruthMessage = false) {
             resultsContainer.innerHTML = `<h2 style="font-family: 'Permanent Marker'; color: red; text-align: center;">Sorry, could not load live results. Will work on it!.</h2>`;
         });
 }
-}
