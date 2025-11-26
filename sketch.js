@@ -263,7 +263,7 @@ function drawResultsButton(x, y, w, h, text, hover) {
     textSize(18); 
     textAlign(CENTER, CENTER);
     textFont('Permanent Marker');
-    text(text, x + w / 2, y + h / 2);
+    text(text, x + w / 2, y + h / 2); 
 }
 
 // --- VOTING MESSAGE DISPLAY (UPDATED) ---
@@ -290,7 +290,7 @@ function displayVotedMessage() {
         let btnHover = mouseX > btnX && mouseX < btnX + btnW && mouseY > btnY && mouseY < btnY + btnH;
         
         // Draw the button
-        drawResultsButton(btnX, btnY, btnW, btnH, "SEE FINAL RESULT", btnHover);
+        drawResultsButton(btnX, btnY, btnW, btnH, "TAKE ME TO STATS", btnHover);
 
         // Update cursor
         if (btnHover) {
