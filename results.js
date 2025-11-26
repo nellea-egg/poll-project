@@ -41,8 +41,9 @@ function displayResultsChart(finalTruthMessage = false) {
             if (finalTruthMessage) {
                 const truthElement = document.createElement('h2');
                 truthElement.innerHTML = finalTruthMessage;
-                truthElement.style.fontFamily = "'Permanent Marker', cursive";
-                truthElement.style.color = '#d90429'; 
+                truthElement.style.fontFamily = "'Caveat', cursive";
+                truthElement.style.color = '#333'; 
+                truthElement.style.fontSize = '2.5em'; // Optional: Adjust size
                 truthElement.style.textAlign = 'center';
                 // Prepend the message before the canvas
                 resultsContainer.insertBefore(truthElement, canvas);
@@ -59,7 +60,7 @@ function displayResultsChart(finalTruthMessage = false) {
             // 3. Create the new chart
             const ctx = document.getElementById('voteChart').getContext('2d');
             chartInstance = new Chart(ctx, {
-                type: 'bar', // Using bar chart as it's cleaner than pie for multi-option polls
+                type: 'pie', 
                 data: {
                     labels: labels,
                     datasets: [{
@@ -84,19 +85,7 @@ function displayResultsChart(finalTruthMessage = false) {
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    if (Number.isInteger(value)) {
-                                        return value;
-                                    }
-                                },
-                            }
-                        }
-                    },
+                    maintainAspectRatio: true,
                     plugins: {
                         legend: {
                             display: true
