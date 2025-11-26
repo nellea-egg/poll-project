@@ -255,7 +255,7 @@ function fetchTruthStatus() {
 }
 
 // --- NEW FUNCTION: Draws the SEE RESULTS button ---
-function drawResultsButton(x, y, w, h, text, hover) {
+function drawResultsButton(x, y, w, h, buttonText, hover) {
     if (hover) {
         fill(255, 100, 100); // Light red when hovered
     } else {
@@ -268,7 +268,7 @@ function drawResultsButton(x, y, w, h, text, hover) {
     textSize(18); 
     textAlign(CENTER, CENTER);
     textFont('Permanent Marker');
-    text(text, x + w / 2, y + h / 2); 
+    text(buttonText, x + w / 2, y + h / 2); 
 }
 
 // --- VOTING MESSAGE DISPLAY (UPDATED) ---
